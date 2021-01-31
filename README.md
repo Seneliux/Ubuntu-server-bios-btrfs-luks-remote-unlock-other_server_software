@@ -40,7 +40,7 @@ Storage will unlock, and now ssh to server by using `$USER`, `$SSH_KEYS` and `$S
 ```bash
 ssh -i $SSH_KEYS -p $SSH_PORT $USER@VPS
 ```
-Copy this to the terminal line by line or all. Adjust time zone line to yours.
+Copy this to the terminal line by line or all. The only line where must change value is timezone.
 ```bash
 ufw allow openssh
 yes | ufw enable
