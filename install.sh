@@ -97,15 +97,8 @@ mkdir ${INSTALL_DIR}/btrfs-current/etc/dropbear-initramfs
 echo ${DROPBEAR_KEYS} | tr ";" "\n" > ${INSTALL_DIR}/btrfs-current/etc/dropbear-initramfs/authorized_keys
 chmod 600 ${INSTALL_DIR}/btrfs-current/etc/dropbear-initramfs/authorized_keys
 
-echo DISK=${DISK} > ${INSTALL_DIR}/btrfs-current/root/variables
-echo DM=${DM} >> ${INSTALL_DIR}/btrfs-current/root/variables
-echo SSH_PORT=${SSH_PORT} >> ${INSTALL_DIR}/btrfs-current/root/variables
-echo USER=${USER} >> ${INSTALL_DIR}/btrfs-current/recho ${SSH_KEYS} | tr ";" "\n" > /home/${USER}/.ssh/authorized_keysoot/variables
-echo DROPBEAR_PORT=${DROPBEAR_PORT} >> ${INSTALL_DIR}/btrfs-current/root/variables
-echo COMPRESS_RATIO=${COMPRESS_RATIO} >> ${INSTALL_DIR}/btrfs-current/root/variables
 for name in proc sys dev dev/pts; do mount --bind /$name ${INSTALL_DIR}/btrfs-current/$name; done
 cat << EOC | chroot ${INSTALL_DIR}/btrfs-current /usr/bin/env -i DISK=${DISK} DM=${DM} SSH_PORT=${SSH_PORT} USER=${USER} DROPBEAR_PORT=${DROPBEAR_PORT} COMPRESS_RATIO=${COMPRESS_RATIO} /bin/bash
-source /root/variables
 locale-gen --purge
 update-locale LANG=$(sed -n '1p' /etc/locale.gen)
 apt update
