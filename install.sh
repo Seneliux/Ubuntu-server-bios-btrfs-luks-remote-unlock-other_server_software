@@ -46,7 +46,6 @@ echo -n "$STORAGE_PASS" | cryptsetup open ${DISK}3 ${DM}3_crypt
 mkdir -p $INSTALL_DIR/btrfs-root
 mkfs.btrfs -f -L $LABEL /dev/mapper/${DM}3_crypt
 mount /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-root -o noatime,space_cache
-mkdir -p $INSTALL_DIR/btrfs-root/
 mkdir $INSTALL_DIR/btrfs-current
 btrfs subvolume create $INSTALL_DIR/btrfs-root/root
 btrfs subvolume create $INSTALL_DIR/btrfs-root/root/home
