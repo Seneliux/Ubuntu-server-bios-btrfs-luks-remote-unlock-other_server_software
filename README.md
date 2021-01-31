@@ -4,7 +4,7 @@ For security reason ALL users, including root, will be locked. One possibility t
 
 # Requirements
 - BIOS firmware. Not all VPS providers pretend an UEFI firmware. It is easy to adjust an `install.sh` script by adding efi partition, but this is not covered here.  - Booted VPS from Debian-Live 9. Maybe will be fine to boot the newer Debian live OS  or even Ubuntu deriative, but this is not tested. Only difference in software versions at the installing stage. `Cryptsetup` must be > 2.x 
-- Generated RSA keys for the remote unlocking. Not covered here hot to generate ssh keypairs. Dropbear supports only RSA.
+- Generated RSA keys for the remote unlocking. Not covered here hot to generate ssh keypairs. Dropbear supports only RSA. It is enought one key for all, different keys to connect from the different devices.
 - Optimal. Generated SSH keys for the connection to server. Maybe the same dropbear keys.  
 
 # Some notes
@@ -28,16 +28,17 @@ Edit a variables in the file `install.sh` and run it:
 ```bash
 ./install.sh
 ```
-The server will be installed and rebooted. SSH to it using `DROPBEAR_PORT` and `DROPBEAR_KEYS`. User: root.  
-`
-ssh -i $DROPBEAR_KEYS root@VPS
-`
-At commandt promt enter you will be asked to unlock cryptodisk:  
-Please nlock 
-Enter `the unpredictable unique very strong disk encryption passphrase`  
-Storage will unlock, and now ssh to server by using `$USER`, and `$SSH_KEYS` and `$SSH_PORT`:  
+The server will be installed and rebooted. SSH to it using `DROPBEAR_PORT` and `DROPBEAR_KEYS`. User: root. 
 ```bash
-ssh -p $SSH_PORT $USER@VPS
+ssh -i $DROPBEAR_KEYS -p $DROPBEAR_PORT root@VPS
+```
+At commandt promt enter you will be asked to unlock cryptodisk:  
+> Please unlock disk ....crypt  
+
+Enter `the unpredictable unique very strong disk encryption passphrase`  
+Storage will unlock, and now ssh to server by using `$USER`, `$SSH_KEYS` and `$SSH_PORT`:  
+```bash
+ssh -i $SSH_KEYS -p $SSH_PORT $USER@VPS
 ```
 Copy this to the terminal line by line or all. Adjust time zone line to yours. At openssh upgrade will be promp to set the config file. Press Enter to keep local version.
 ```bash
