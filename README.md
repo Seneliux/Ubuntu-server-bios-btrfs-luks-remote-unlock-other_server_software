@@ -8,6 +8,7 @@ For security reason ALL users, including root, will be locked. One possibility t
 - Optimal. Generated SSH keys for the connection to server. Maybe the same dropbear keys.  
 
 # Some notes
+Backup, BACKUP and one more time **BACKUP!!!!!** All data will be destroyed, do backups. Always.  
 Install script will create `Huge pages`, about 3GB (3x1024/2+extra 500 = 2036). If your system do not need Huge pages, remove line in the file `install.sh`or set different value:  
 >echo vm.nr_hugepages = 2036 >> /etc/sysctl.conf  
 
