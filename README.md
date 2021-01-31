@@ -40,12 +40,13 @@ Storage will unlock, and now ssh to server by using `$USER`, `$SSH_KEYS` and `$S
 ```bash
 ssh -i $SSH_KEYS -p $SSH_PORT $USER@VPS
 ```
-Copy this to the terminal line by line or all. Adjust time zone line to yours. At openssh upgrade will be promp to set the config file. Press Enter to keep local version.
+Copy this to the terminal line by line or all. Adjust time zone line to yours.
 ```bash
 ufw allow openssh
 yes | ufw enable
 apt update
-apt upgrade -y
+export DEBIAN_FRONTEND=noninteractive
+apt upgrade -y -o Dpkg::Options::="--force-confold" --allow-remove-essential
 timedatectl set-timezone Europe/Berlin
 btrfs filesystem defragment -rczstd /
 ```
