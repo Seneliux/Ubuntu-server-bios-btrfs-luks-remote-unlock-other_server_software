@@ -22,8 +22,7 @@ compsize /run/btrfs-root
 ssh to your live system.  
 Run this code:
 ```bash
-wget https://raw.githubusercontent.com/Seneliux/Remote-unlock-Ubuntu-btrfs-bios/main/install.sh
-chmod +x install.sh
+wget https://raw.githubusercontent.com/Seneliux/Remote-unlock-Ubuntu-btrfs-bios/main/install.sh && chmod +x install.sh
 ```
 Edit a variables in the file `install.sh` and run it:
 ```bash
