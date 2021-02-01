@@ -1,5 +1,5 @@
 # Ubuntu-server-bios-btrfs-luks-remote-unlock
-Ubuntu encrypted server,  BTRFS file system, BIOS firmware.  
+Ubuntu encrypted server,  BTRFS file system, BIOS firmware, luks 2 encryption.  
 For security reason ALL users, including root, will be locked. One possibility to login to the server - specifying the correct user name and SSH key.
 
 # Requirements
