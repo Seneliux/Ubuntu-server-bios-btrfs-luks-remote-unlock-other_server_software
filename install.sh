@@ -46,17 +46,18 @@ echo -n "$STORAGE_PASS" | cryptsetup open ${DISK}3 ${DM}3_crypt
 mkdir -p $INSTALL_DIR/btrfs-root
 mkfs.btrfs -f -L $LABEL /dev/mapper/${DM}3_crypt
 mount /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-root -o noatime,space_cache
+mkdir -p $INSTALL_DIR/btrfs-root/
 mkdir $INSTALL_DIR/btrfs-current
 btrfs subvolume create $INSTALL_DIR/btrfs-root/root
-btrfs subvolume create $INSTALL_DIR/btrfs-root/root/home
-btrfs subvolume create $INSTALL_DIR/btrfs-root/root/opt
+btrfs subvolume create $INSTALL_DIR/btrfs-root/home
+btrfs subvolume create $INSTALL_DIR/btrfs-root/opt
 mount -o defaults,noatime,space_cache,subvol=root /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current
 mkdir -p $INSTALL_DIR/btrfs-current/var/
-btrfs subvolume create $INSTALL_DIR/btrfs-root/root/var/cache
-btrfs subvolume create $INSTALL_DIR/btrfs-root/root/var/mail
-btrfs subvolume create $INSTALL_DIR/btrfs-root/root/var/log
-btrfs subvolume create $INSTALL_DIR/btrfs-root/root/var/www
-btrfs subvolume create $INSTALL_DIR/btrfs-root/root/var/spool
+btrfs subvolume create $INSTALL_DIR/btrfs-current/var/cache
+btrfs subvolume create $INSTALL_DIR/btrfs-current/var/mail
+btrfs subvolume create $INSTALL_DIR/btrfs-current/var/log
+btrfs subvolume create $INSTALL_DIR/btrfs-current/var/www
+btrfs subvolume create $INSTALL_DIR/btrfs-current/var/spool
 mkdir ${INSTALL_DIR}/btrfs-current/boot
 yes | mkfs.ext4 ${DISK}2
 mount ${DISK}2 ${INSTALL_DIR}/btrfs-current/boot
@@ -117,8 +118,15 @@ sed -i "s/#Port 22/Port ${SSH_PORT}/" /etc/ssh/sshd_config
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
 sed -i "s/ports=22\/tcp/ports=${SSH_PORT}\/tcp/" /etc/ufw/applications.d/openssh-server
 ufw app update all
-echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) / btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=root 0 1" >> /etc/fstab
 echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /run/btrfs-root btrfs defaults,noatime,commit=120,space_cache,nodev,nosuid,noexec${COMPRESS_RATIO} 0 0" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) / btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=root 0 1" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /home btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=home 0 2" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /opt btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=opt 0 2" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/log btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=log 0 0" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/www btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=www 0 2" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/mail btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=mail 0 2" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/spool btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=spool 0 0" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/cache btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=cache 0 0" >> /etc/fstab
 echo "RESUME=none" >> /etc/initramfs-tools/conf.d/noresume.conf
 update-initramfs -k all -c
 update-grub
@@ -136,3 +144,4 @@ chmod 600 ${INSTALL_DIR}/btrfs-current/root/.ssh/authorized_keys
 umount -R $INSTALL_DIR/btrfs-current/
 umount -R $INSTALL_DIR/btrfs-root/
 reboot
+
