@@ -2,8 +2,10 @@
 # Postgresql
 ```bash
 cd /run/btrfs-root
-btrfs sub create root/var/lib/postgresql
-chattr +C root/var/lib/postgresql
+btrfs sub create postgresql
+chattr +C postgresql
+mkdir /var/lib/postgresql
+chattr +C /var/lib/postgresql
 apt install -y postgresql postgresql-contrib
 sudo -u postgres psql
 ```
@@ -26,7 +28,10 @@ to
 ```properties
 listen_addresses = '*'
 ```
-
+Restart postgresql server:
+```bash
+service postgresql restart
+```
 
 # MySQL
 Will be later....
