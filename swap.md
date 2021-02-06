@@ -4,7 +4,7 @@ Edit fstab. Copy one line of btrfs pool, and add one more line. Swap section of 
 UUID=some_random_value /swap btrfs noatime,commit=30,subvol=swap 0 0
 /swap/swapfile none swap defaults 0 0
 ```
-Swap file size is determined at line `fallocate -l 3G swap/swapfile`.  
+Swap file size is determined at the line `fallocate -l 3G swap/swapfile`.  
 Run these commands:
 ```bash
 cd /run/btrfs-root
