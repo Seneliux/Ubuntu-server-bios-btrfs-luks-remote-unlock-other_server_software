@@ -21,6 +21,7 @@ LABEL="ubuntu"
 INSTALL_DIR=/mnt
 
 
+
 [[ ! -z "$COMPRESS_RATIO" ]] && COMPRESS_RATIO=,compress=zstd:${COMPRESS_RATIO}
 
 if [[ $(lsblk |  grep -vE "NAME|tmpfs|cdrom|loop|mapper" | awk '{print $1}' | head -n 1) != sda  ]]; then
@@ -45,19 +46,28 @@ echo -n "$STORAGE_PASS" | cryptsetup -c aes-xts-plain64 --type luks2 --pbkdf arg
 echo -n "$STORAGE_PASS" | cryptsetup open ${DISK}3 ${DM}3_crypt
 mkdir -p $INSTALL_DIR/btrfs-root
 mkfs.btrfs -f -L $LABEL /dev/mapper/${DM}3_crypt
-mount /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-root -o noatime,space_cache
 mkdir -p $INSTALL_DIR/btrfs-root/
 mkdir $INSTALL_DIR/btrfs-current
+mount /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-root -o noatime,space_cache
 btrfs subvolume create $INSTALL_DIR/btrfs-root/root
 btrfs subvolume create $INSTALL_DIR/btrfs-root/home
 btrfs subvolume create $INSTALL_DIR/btrfs-root/opt
+btrfs subvolume create $INSTALL_DIR/btrfs-root/cache
+btrfs subvolume create $INSTALL_DIR/btrfs-root//mail
+btrfs subvolume create $INSTALL_DIR/btrfs-root/log
+btrfs subvolume create $INSTALL_DIR/btrfs-root/www
+btrfs subvolume create $INSTALL_DIR/btrfs-root/spool
+
 mount -o defaults,noatime,space_cache,subvol=root /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current
-mkdir -p $INSTALL_DIR/btrfs-current/var/
-btrfs subvolume create $INSTALL_DIR/btrfs-current/var/cache
-btrfs subvolume create $INSTALL_DIR/btrfs-current/var/mail
-btrfs subvolume create $INSTALL_DIR/btrfs-current/var/log
-btrfs subvolume create $INSTALL_DIR/btrfs-current/var/www
-btrfs subvolume create $INSTALL_DIR/btrfs-current/var/spool
+mkdir -p $INSTALL_DIR/btrfs-current/{var/cache,var/mail,var/log,var/www,var/spool,home,opt}
+mount -o defaults,noatime,space_cache,subvol=home /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/home
+mount -o defaults,noatime,space_cache,subvol=opt /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/opt
+mount -o defaults,noatime,space_cache,subvol=cache /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/var/cache
+mount -o defaults,noatime,space_cache,subvol=mail /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/var/mail
+mount -o defaults,noatime,space_cache,subvol=log /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/var/log
+mount -o defaults,noatime,space_cache,subvol=www /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/var/www
+mount -o defaults,noatime,space_cache,subvol=www /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/var/spool
+
 mkdir ${INSTALL_DIR}/btrfs-current/boot
 yes | mkfs.ext4 ${DISK}2
 mount ${DISK}2 ${INSTALL_DIR}/btrfs-current/boot
@@ -139,9 +149,11 @@ addgroup $USER sudo
 EOC
 mkdir ${INSTALL_DIR}/btrfs-current/home/$USER/.ssh
 echo ${SSH_KEYS} | tr ";" "\n" > ${INSTALL_DIR}/btrfs-current/home/$USER/.ssh/authorized_keys
-chmod 700 ${INSTALL_DIR}/btrfs-current/root/.ssh
-chmod 600 ${INSTALL_DIR}/btrfs-current/root/.ssh/authorized_keys
+cat << EOC | chroot ${INSTALL_DIR}/btrfs-current /usr/bin/env -i USER=${USER} /bin/bash
+chmod 700 /home/$USER/.ssh
+chmod 600 /home/$USER/.ssh/authorized_keys
+chown -R $USER:$USER /home/$USER/.ssh
+EOC
 umount -R $INSTALL_DIR/btrfs-current/
 umount -R $INSTALL_DIR/btrfs-root/
 reboot
-
