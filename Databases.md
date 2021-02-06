@@ -39,6 +39,14 @@ Restart postgresql server:
 ```bash
 service postgresql restart
 ```
+For PHP support, install 
+```bash
+apt install -y php-pgsql
+```
 
 # MySQL
 Will be later....
+For PHP support, install 
+```bash
+php-mysql
+```
