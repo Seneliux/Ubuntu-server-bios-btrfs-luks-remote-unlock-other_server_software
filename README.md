@@ -53,5 +53,6 @@ apt upgrade -y -o Dpkg::Options::="--force-confold" --allow-remove-essential
 timedatectl set-timezone Europe/Berlin
 btrfs filesystem defragment -rczstd /
 apt purge os-prober
+apt install -y build-essentials
 ```
 That all. Now you can [install Minecraft server](https://github.com/Seneliux/MinecraftSystemdUnit) :D
