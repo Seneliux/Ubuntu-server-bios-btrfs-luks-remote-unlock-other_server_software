@@ -1,4 +1,5 @@
 # LEMP stack: nginx + databases {postgresql, mariadb or both} + php-fpm
+## nginx
 
 Edit file `/etc/fstab` by copying one lide with subvolume, pasting and modifying it:
 ```properties
@@ -25,4 +26,8 @@ mv /etc/letsencrypt /etc/nginx
 ln -s /etc/nginx/letsencrypt /etc/letsencrypt
 certbot -d YOURHOST --nginx
 chown -R www-data:www-data /var/www/html/
+```
+## php-fpm
+```bash
+apt install -y php-fpm
 ```
