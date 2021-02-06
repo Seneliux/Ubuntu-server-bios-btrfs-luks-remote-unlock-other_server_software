@@ -37,4 +37,5 @@ After rebooting system check swap existence / usage:
 ```bash
 free -h
 grep -R . /sys/module/zswap/parameters
+dmesg | grep zpool
 ```
