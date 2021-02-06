@@ -49,5 +49,6 @@ export DEBIAN_FRONTEND=noninteractive
 apt upgrade -y -o Dpkg::Options::="--force-confold" --allow-remove-essential
 timedatectl set-timezone Europe/Berlin
 btrfs filesystem defragment -rczstd /
+apt purge os-prober
 ```
 That all. Now you can [install Minecraft server](https://github.com/Seneliux/MinecraftSystemdUnit) :D
