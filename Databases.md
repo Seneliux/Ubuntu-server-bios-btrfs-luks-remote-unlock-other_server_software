@@ -47,6 +47,7 @@ apt install -y php-pgsql
 Optimal install web interface for PostgreSQL servers.
 Requirements: running nginx instance (see LEMP.md).
 ```bash
+apt install -y build-essentials
 mkdir /var/www/html/admin
 cd /var/www/html/$HOST/admin
 python3 -m venv pgadmin4
