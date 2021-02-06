@@ -41,7 +41,7 @@ cryptsetup luksOpen ${DISK}3 ${DM}3_crypt
 mount /dev/mapper/${DM}3_crypt /mnt
 cd /mnt
 btrfs sub del root
-# Two variants.
+# Choose one variant from two:
 # First - recover from the (remote) location:
 btrfs send snapshots/root_fresh/ | btrfs receive .
 mv root_fresh root
