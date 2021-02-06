@@ -66,7 +66,7 @@ mount -o defaults,noatime,space_cache,subvol=cache /dev/mapper/${DM}3_crypt $INS
 mount -o defaults,noatime,space_cache,subvol=mail /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/var/mail
 mount -o defaults,noatime,space_cache,subvol=log /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/var/log
 mount -o defaults,noatime,space_cache,subvol=www /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/var/www
-mount -o defaults,noatime,space_cache,subvol=www /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/var/spool
+mount -o defaults,noatime,space_cache,subvol=spool /dev/mapper/${DM}3_crypt $INSTALL_DIR/btrfs-current/var/spool
 
 mkdir ${INSTALL_DIR}/btrfs-current/boot
 yes | mkfs.ext4 ${DISK}2
