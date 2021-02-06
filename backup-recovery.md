@@ -23,4 +23,18 @@ btrfs send /.snapshots/root_fresh/ | btrfs receive /backup/
 Now we can sleep better without stress - if somethong goes wrong, will be posibble revert to last good snapshoped state.
 
 ## Recovery
-Will be later .....
+Boot from live cd, decrypt storage:
+Below is the example how to revocer root subvolume:
+```bash
+if [[ $(lsblk |  grep -vE "NAME|tmpfs|cdrom|loop|mapper" | awk '{print $1}' | head -n 1) != sda  ]]; then
+  export DISK="/dev/nvme0n1"
+else
+  export DISK="/dev/sda"
+fi
+  DISKP="${DISK}$( if [[ "$DISK" =~ "nvme" ]]; then echo "p"; fi )"
+DM="${DISK##*/}"
+mount /dev/mapper/${DM}3_crypt /mnt
+cd /mnt
+btrfs sub del root
+btrfs sub snap 
+```
