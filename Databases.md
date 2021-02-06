@@ -1,11 +1,18 @@
 # Databases
 # Postgresql
+Edit file `/etc/fstab` by copying with and subvolume, pasting and modifying one line:
+```properties
+UUID=some-random-value /var/lib/postgresql btrfs defaults,noatime,commit=120,space_cache,compress=zstd:5,subvol=postgresql 0 2
+```
+
+
 ```bash
 cd /run/btrfs-root
 btrfs sub create postgresql
 chattr +C postgresql
 mkdir /var/lib/postgresql
 chattr +C /var/lib/postgresql
+mount /var/lib/postgresql
 apt install -y postgresql postgresql-contrib
 sudo -u postgres psql
 ```
