@@ -11,15 +11,19 @@ Edit file  `/etc/fstab` by copying any included subvolume line, and edit it like
 ```properties
 UUID=some_random_symbols   /backup  btrfs defaults,noatime,commit=30,space_cache,compress=zstd:4,subvol=backup 0 2
 ```
-Run theses commands:
+Create snapshot / backup of the root subvolume:
 ```bash
-mkdir /{.snapshots,backup}
+mkdir /backup
 cd /run/btrfs-root
+mkdir snapshots
 btrfs sub create backup
 mount /backup
-btrfs sub snap -r root/ /.snapshots/root_fresh
-btrfs send /.snapshots/root_fresh/ | btrfs receive /backup/
+btrfs sub snap -r root/ /run/btrfs-root/snapshots/root_fresh
+# This is example hot to send snapshot to different location. It is possible to send read-only snapshots to the remote btrfs storage.
+btrfs send /run/btrfs-root/snapshots/root_fresh/ | btrfs receive /backup/
 ```
+This will not include other subvolumes like /home /opt, var/log and so on. Must snapshot (optimal: send to other physical disk) all important subvolumes.
+
 Now we can sleep better without stress - if somethong goes wrong, will be posibble revert to last good snapshoped state.
 
 ## Recovery
@@ -33,8 +37,15 @@ else
 fi
   DISKP="${DISK}$( if [[ "$DISK" =~ "nvme" ]]; then echo "p"; fi )"
 DM="${DISK##*/}"
+cryptsetup luksOpen ${DISK}3 ${DM}3_crypt
 mount /dev/mapper/${DM}3_crypt /mnt
 cd /mnt
 btrfs sub del root
-btrfs sub snap 
+# Two variants.
+# First - recover from the (remote) location:
+btrfs send snapshots/root_fresh/ | btrfs receive .
+mv root_fresh root
+# Second - snapshot subvolume from local file system (restore very quick):
+btrfs sub snap snapshots/root_fresh root
+reboot
 ```
