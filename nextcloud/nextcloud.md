@@ -186,4 +186,21 @@ https://markus-blog.de/index.php/2018/05/30/how-to-install-apcu-object-cache-in-
 
 apt install -y php-intl php-bcmath php-bmp php-imagick
 
+From https://www.collaboraoffice.com/code/linux-packages/  with a little modification:
 
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0C54D189F4BA284D
+sudo echo 'deb https://www.collaboraoffice.com/repos/CollaboraOnline/CODE-ubuntu2004 ./' >> /etc/apt/sources.list.d/code.list
+
+
+
+cron background jobs
+Set in Basic settings cron.  
+crontab -u www-data -e
+add line:
+*/5  *  *  *  * php -f /var/www/html/$YOUR_DOMAIN/nextcloud/cron.php
+
+
+
+loolconfig set ssl.enable false
+loolconfig set ssl.termination true
+loolconfig set net.proto ipv4
