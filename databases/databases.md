@@ -26,9 +26,9 @@ CREATE ROLE username WITH LOGIN SUPERUSER PASSWORD 'password';
 To exit the postgre server, type `\q`
 
 
-Allow `user` to connect to the server from outside (Change *12* to installed postgresql version):
+Allow `$USER` to connect to the server from outside (Change *12* to installed postgresql version):
 ```bash
-echo 'host all USER 0.0.0.0/0 md5' >> /etc/postgresql/12/main/pg_hba.conf
+echo 'host all $USER 0.0.0.0/0 md5' >> /etc/postgresql/12/main/pg_hba.conf
 ```
 Edit the file `/etc/postgresql/12/main/postgresql.conf` and change line 
 ```properties
