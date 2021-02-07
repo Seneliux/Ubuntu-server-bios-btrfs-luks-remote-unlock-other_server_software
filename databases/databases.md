@@ -14,6 +14,7 @@ mkdir /var/lib/postgresql
 chattr +C /var/lib/postgresql
 mount /var/lib/postgresql
 apt install -y postgresql postgresql-contrib
+chown postgres:postgres /var/lib/postgresql
 sudo -u postgres psql
 ```
 
