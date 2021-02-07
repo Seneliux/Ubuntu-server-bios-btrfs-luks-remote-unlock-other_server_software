@@ -1,7 +1,7 @@
 # Nextcloud with collabora online server
 Copy newest URL from here https://nextcloud.com/install/#instructions-server
 
-cd /var/www/html/$YOUR_domain
+cd /var/www/html  
 wget https://download.nextcloud.com/server/releases/nextcloud-20.0.7.zip
 unzip nextcloud*
 chown -R www-data:www-data /var/www/html
