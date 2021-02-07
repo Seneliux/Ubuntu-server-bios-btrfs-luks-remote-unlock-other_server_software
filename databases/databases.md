@@ -82,4 +82,8 @@ Optimal. phpMyadmin
  
  ln -s /usr/share/phpmyadmin /var/www/html/$YOUR_DOMAIN/$OPTIMAL_DIRECTORY/phpmyadmin
  
+ sudo mariadb
  
+ GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
+flush privileges;
+quit
