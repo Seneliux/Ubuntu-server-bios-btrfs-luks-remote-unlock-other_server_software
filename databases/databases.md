@@ -51,6 +51,19 @@ Requirements: running nginx instance (see LEMP.md). nginx will be reverse proxy 
 wget https://raw.githubusercontent.com/Seneliux/Ubuntu-server-bios-btrfs-luks-remote-unlock/main/databases/pgadmin.sh && chmod +x pgadmin.sh
 ./pgadmin.sh
 ```
+Add at the nginx enabled site this block and restart the nginx service. Change two variables OPTIMAL_SUBFOLDER or delete it, and YOUR_HOST. Direcotry OPTIMAL_SUBFOLDER/pgadmin4 not exist on storage, do not create it.
+```properties
+location /OPTIMAL_SUBFOLDER/pgadmin4/ {
+        limit_except GET POST { deny  all; }
+                include proxy_params;
+                proxy_pass http://unix:/tmp/pgadmin4.sock;
+                proxy_set_header X-Script-Name /OPTIMAL_SUBFOLDER/pgadmin4;
+                add_header Referer "https://YOUR_HOST";
+                access_log /var/log/nginx/pgadmin4.access.log custom;
+                error_log /var/log/nginx/pgadmin4_error.log warn;
+        }
+```
+
 
 ## MySQL
 Will be later....
