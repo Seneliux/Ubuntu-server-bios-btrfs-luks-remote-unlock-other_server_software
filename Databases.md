@@ -45,21 +45,25 @@ apt install -y php-pgsql
 ```
 ### pgAdmin 
 Optimal install web interface for PostgreSQL servers.
-Requirements: running nginx instance (see LEMP.md).
+Requirements: running nginx instance (see LEMP.md). nginx will be reverse proxy to gunicorn + pgadmin4. 
+
 ```bash
-apt install -y build-essentials
-mkdir /var/www/html/admin
-cd /var/www/html/$HOST/admin
+apt install -y build-essential
+apt install -y python3-wheel python3-pip python3-venv
+cd /var/www
 python3 -m venv pgadmin4
-cd pgadmin4
-mkdir data
-. bin/activate
-pip install wheel
-pip install pipreqs
-pipreqs
-pip install -r requirements.txt
+mkdir pgadmin4/data
+source pgadmin4/bin/activate
+pip3 install wheel
 pip install pgadmin4
-nano lib/python3.8/site-packages/pgadmin4/config_local.py
+cat > pgadmin4/lib/python3.8/site-packages/pgadmin4/config_local.py << EOF
+import os
+DATA_DIR = '/var/www/pgadmin4/data'
+LOG_FILE = '/var/log/nginx/pgadmin4.log'
+SQLITE_PATH = os.path.join(DATA_DIR, 'pgadmin4.db')
+SESSION_DB_PATH = os.path.join(DATA_DIR, 'sessions')
+STORAGE_DIR = os.path.join(DATA_DIR, 'storage')
+EOF
 ```
 
 Paste this:
