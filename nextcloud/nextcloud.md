@@ -180,8 +180,8 @@ memory_limit = 512M
 
 service php7.4-fpm restart
 
-cd /var/www/html/$HOST/nextcloud
-Note occ command - not all configs are possible from gui, or changes of the configs can be made from terminal by running occ command as user www-data:  
+cd /var/www/html/nextcloud  
+Note occ command - not all configs are possible from gui, or changes of the configs can be made from terminal by running occ command as user www-data:   
 sudo -u www-data php occ db:add-missing-indices
 
 
@@ -198,9 +198,9 @@ sudo echo 'deb https://www.collaboraoffice.com/repos/CollaboraOnline/CODE-ubuntu
 
 
 cron background jobs
-Set in Basic settings cron.  
-crontab -u www-data -e
-add line:
+Set in Basic settings cron.    
+crontab -u www-data -e  
+add line:  
 */5  *  *  *  * php -f /var/www/html/$YOUR_DOMAIN/nextcloud/cron.php
 
 
