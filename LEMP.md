@@ -27,6 +27,16 @@ ln -s /etc/nginx/letsencrypt /etc/letsencrypt
 certbot -d YOURHOST --nginx
 chown -R www-data:www-data /var/www/html/
 ```
+Optimal. Simple nginx authentification:  
+```bash
+sh -c "echo -n '$USER:' >> /etc/nginx/.htpasswd"
+sh -c "openssl passwd -apr1 >> /etc/nginx/.htpasswd"
+```
+And add to your private folder of the nginx site config:
+
+
+
+
 ## php-fpm
 ```bash
 apt install -y php-fpm
