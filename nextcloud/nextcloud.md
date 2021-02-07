@@ -188,7 +188,7 @@ sudo -u www-data php occ db:add-missing-indices
 Memory cache:
 https://markus-blog.de/index.php/2018/05/30/how-to-install-apcu-object-cache-in-php7-and-integrate-in-nextcloud/
 
-apt install -y php-intl php-bcmath php-bmp php-imagick
+apt install -y php-intl php-bcmath php-gmp php-imagick
 
 From https://www.collaboraoffice.com/code/linux-packages/  with a little modification:
 
