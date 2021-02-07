@@ -201,6 +201,14 @@ add line:
 
 
 
-loolconfig set ssl.enable false
-loolconfig set ssl.termination true
-loolconfig set net.proto ipv4
+loolconfig set ssl.enable false  
+loolconfig set ssl.termination true  
+loolconfig set net.proto ipv4  
+loolconfig set storage.wopi.host $nextcloud.example.com  
+ systemctl restart loolwsd
+ 
+ TO change port from the default 9980 to 9979, append to line --port=9979
+ExecStart=/usr/bin/loolwsd --version --o:sys_template_path=/opt/lool/systemplate --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd --port=9979
+
+ systemctl edit --full  loolwsd
+systemctl restart loolwsd
