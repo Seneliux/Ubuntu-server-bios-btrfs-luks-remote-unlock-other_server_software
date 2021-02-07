@@ -159,6 +159,8 @@ location /.well-known {
     }
 ```
 
-
-
+1. Create postgresql user and database for nextcloud:
+using pgadmin4 web interface or manually.
+CREATE ROLE $NEXTCLOUD_USER WITH LOGIN PASSWORD '$password';
+CREATE DATABASE $NEXTCLOUD_DATABASE OWNER  $NEXTCLOUD_USER;
 
