@@ -204,6 +204,7 @@ add line:
 loolconfig set ssl.enable false  
 loolconfig set ssl.termination true  
 loolconfig set net.proto ipv4  
+If nextcloud is in subdirectory like example.com/nextcloud , do not add this subdirectory, obly domain:
 loolconfig set storage.wopi.host $nextcloud.example.com  
  systemctl restart loolwsd
  
@@ -211,4 +212,8 @@ loolconfig set storage.wopi.host $nextcloud.example.com
 ExecStart=/usr/bin/loolwsd --version --o:sys_template_path=/opt/lool/systemplate --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd --port=9979
 
  systemctl edit --full  loolwsd
-systemctl restart loolwsd
+systemctl restart loolwsd  
+
+
+Nextcloud settings >> Collabora online set 'Use your own server' and add URL:
+https://YOUR_DOMAIN
