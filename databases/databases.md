@@ -84,6 +84,8 @@ Optimal. phpMyadmin
  
  sudo mariadb
  
- GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
+```properties
+GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
 flush privileges;
 quit
+```
