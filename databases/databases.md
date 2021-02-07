@@ -15,6 +15,7 @@ chattr +C /var/lib/postgresql
 mount /var/lib/postgresql
 apt install -y postgresql postgresql-contrib
 chown postgres:postgres /var/lib/postgresql
+ufw allow 5432/tcp
 sudo -u postgres psql
 ```
 
@@ -23,6 +24,7 @@ Optimal. Now you are connected to postgres server. Add user with all permissions
 CREATE ROLE username WITH LOGIN SUPERUSER PASSWORD 'password';
 ```
 To exit the postgre server, type `\q`
+
 
 Allow `user` to connect to the server from outside (Change *12* to installed postgresql version):
 ```bash
