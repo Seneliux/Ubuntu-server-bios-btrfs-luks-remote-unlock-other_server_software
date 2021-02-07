@@ -160,7 +160,15 @@ location /.well-known {
 ```
 
 1. Create postgresql user and database for nextcloud:
-using pgadmin4 web interface or manually.
-CREATE ROLE $NEXTCLOUD_USER WITH LOGIN PASSWORD '$password';
+using pgadmin4 web interface or manually.  
+CREATE ROLE $NEXTCLOUD_USER WITH LOGIN PASSWORD '$password';  
 CREATE DATABASE $NEXTCLOUD_DATABASE OWNER  $NEXTCLOUD_USER;
+
+edit /etc/php/7.4/fpm/pool.d/www.conf by UNcommenting these lines:
+;env[HOSTNAME] = $HOSTNAME
+;env[PATH] = /usr/local/bin:/usr/bin:/bin
+;env[TMP] = /tmp
+;env[TMPDIR] = /tmp
+;env[TEMP] = /tmp
+
 
