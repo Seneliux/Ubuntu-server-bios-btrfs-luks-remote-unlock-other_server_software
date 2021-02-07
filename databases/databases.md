@@ -74,3 +74,12 @@ For PHP support, install
 ```bash
 php-mysql
 ```
+Optimal. phpMyadmin
+
+ apt install -y phpmyadmin php-mbstring php-zip php-gd php-json php-curl
+ 
+ At promp do not select apache or lighthttp. Later at the promp choose configure, and do not create password.
+ 
+ ln -s /usr/share/phpmyadmin /var/www/html/$YOUR_DOMAIN/$OPTIMAL_DIRECTORY/phpmyadmin
+ 
+ 
