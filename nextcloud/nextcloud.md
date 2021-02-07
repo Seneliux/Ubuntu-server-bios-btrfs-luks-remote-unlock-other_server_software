@@ -179,3 +179,11 @@ service php7.4-fpm restart
 cd /var/www/html/$HOST/nextcloud
 Note occ command - not all configs are possible from gui, or changes of the configs can be made from terminal by running occ command as user www-data:  
 sudo -u www-data php occ db:add-missing-indices
+
+
+Memory cache:
+https://markus-blog.de/index.php/2018/05/30/how-to-install-apcu-object-cache-in-php7-and-integrate-in-nextcloud/
+
+apt install -y php-intl php-bcmath php-bmp php-imagick
+
+
