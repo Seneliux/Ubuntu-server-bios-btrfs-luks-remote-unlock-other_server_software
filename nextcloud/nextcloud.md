@@ -164,11 +164,18 @@ using pgadmin4 web interface or manually.
 CREATE ROLE $NEXTCLOUD_USER WITH LOGIN PASSWORD '$password';  
 CREATE DATABASE $NEXTCLOUD_DATABASE OWNER  $NEXTCLOUD_USER;
 
-edit /etc/php/7.4/fpm/pool.d/www.conf by UNcommenting these lines:
-;env[HOSTNAME] = $HOSTNAME
-;env[PATH] = /usr/local/bin:/usr/bin:/bin
-;env[TMP] = /tmp
-;env[TMPDIR] = /tmp
-;env[TEMP] = /tmp
+edit /etc/php/7.4/fpm/pool.d/www.conf by UNcommenting these lines:  
+;env[HOSTNAME] = $HOSTNAME  
+;env[PATH] = /usr/local/bin:/usr/bin:/bin  
+;env[TMP] = /tmp  
+;env[TMPDIR] = /tmp  
+;env[TEMP] = /tmp  
 
+edit /etc/php/7.4/fpm/php.ini  , change value to 512M  
+memory_limit = 512M
 
+service php7.4-fpm restart
+
+cd /var/www/html/$HOST/nextcloud
+Note occ command - not all configs are possible from gui, or changes of the configs can be made from terminal by running occ command as user www-data:  
+sudo -u www-data php occ db:add-missing-indices
