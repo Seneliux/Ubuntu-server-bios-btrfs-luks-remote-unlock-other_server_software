@@ -7,8 +7,12 @@ unzip nextcloud*
 chown -R www-data:www-data /var/www/html
 
 
-Add to nginx:  
+Create /etc/nginx/sites-available/nextcloud file:  
 ```properties
+upstream php-handler {
+    server unix:/var/run/php/php7.4-fpm.sock;
+}
+
 location /.well-known {
         # The following 6 rules are borrowed from `.htaccess`
 
