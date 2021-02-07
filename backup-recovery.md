@@ -49,3 +49,17 @@ mv root_fresh root
 btrfs sub snap snapshots/root_fresh root
 reboot
 ```
+Only / (root) must be recovered from live cd. Other subvolumes recovering simple:  
+- stop services using subvolume;  
+- delete subvolume;
+- snapshot from the napshot / backup;  
+- restart stoped services.
+Example for postgresql subvolume:  
+```bash
+ps -ef | grep postgresql
+service stop postgresql
+cd /run/btrfs-root
+btrfs sub del postgresql
+btrfs sub snap snapshots/postgresql postgresql
+service start postgresql
+```
