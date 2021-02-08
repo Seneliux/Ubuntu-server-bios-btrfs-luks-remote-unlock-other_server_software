@@ -188,13 +188,17 @@ sudo -u www-data php occ db:add-missing-indices
 Memory cache:
 https://markus-blog.de/index.php/2018/05/30/how-to-install-apcu-object-cache-in-php7-and-integrate-in-nextcloud/
 
-apt install -y php-intl php-bcmath php-gmp php-imagick
+apt install -y php-intl php-bcmath php-gmp php-imagick  
+
+
+If nextcloud is veeeeryyyyyyyyyyy slow, disable integrated collabora online server and deploy seperate instance of CODE:  
+cd /var/www/html/nextcloud
+sudo -u www-data php occ app:disable richdocumentscode
 
 From https://www.collaboraoffice.com/code/linux-packages/  with a little modification:
 
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0C54D189F4BA284D
 sudo echo 'deb https://www.collaboraoffice.com/repos/CollaboraOnline/CODE-ubuntu2004 ./' >> /etc/apt/sources.list.d/code.list
-
 
 
 cron background jobs
