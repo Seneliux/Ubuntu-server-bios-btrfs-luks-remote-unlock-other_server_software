@@ -15,7 +15,6 @@ chattr +C /var/lib/postgresql
 mount /var/lib/postgresql
 apt install -y postgresql postgresql-contrib
 chown postgres:postgres /var/lib/postgresql
-ufw allow 5432/tcp
 sudo -u postgres psql
 ```
 
