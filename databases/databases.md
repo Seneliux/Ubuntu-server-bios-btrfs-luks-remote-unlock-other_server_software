@@ -70,6 +70,21 @@ location /OPTIMAL_SUBFOLDER/pgadmin4/ {
 
 ## MySQL
 Will be later....
+```bash
+cd /run/btrfs-root
+btrfs sub create mysql
+chattr +C mysql
+mkdir /var/lib/mysql
+chattr +C /var/lib/mysql
+mount /var/lib/mysql
+apt install -y mariadb-server
+chown mysql:mysql /var/lib/myql
+mysql_secure_installation
+```
+
+
+
+
 For PHP support, install 
 ```bash
 php-mysql
