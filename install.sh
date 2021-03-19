@@ -130,11 +130,11 @@ sed -i "s/ports=22\/tcp/ports=${SSH_PORT}\/tcp/" /etc/ufw/applications.d/openssh
 ufw app update all
 echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /run/btrfs-root btrfs defaults,noatime,commit=120,space_cache,nodev,nosuid,noexec${COMPRESS_RATIO} 0 0" >> /etc/fstab
 echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) / btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=root 0 1" >> /etc/fstab
-echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /home btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=home 0 2" >> /etc/fstab
-echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /opt btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=opt 0 2" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /home btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=home 0 0" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /opt btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=opt 0 0" >> /etc/fstab
 echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/log btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=log 0 0" >> /etc/fstab
-echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/www btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=www 0 2" >> /etc/fstab
-echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/mail btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=mail 0 2" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/www btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=www 0 0" >> /etc/fstab
+echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/mail btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=mail 0 0" >> /etc/fstab
 echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/spool btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=spool 0 0" >> /etc/fstab
 echo "UUID=$(blkid -s UUID -o value /dev/mapper/${DM}3_crypt) /var/cache btrfs defaults,noatime,commit=120,space_cache${COMPRESS_RATIO},subvol=cache 0 0" >> /etc/fstab
 echo "RESUME=none" >> /etc/initramfs-tools/conf.d/noresume.conf
