@@ -54,4 +54,4 @@ timedatectl set-timezone Europe/Berlin
 btrfs filesystem defragment -rczstd /
 apt remove --purge os-prober
 ```
-That all. Now you can [install Minecraft server](https://github.com/Seneliux/MinecraftSystemdUnit) :D
+That all. Now you can [install Minecraft server](https://github.com/Seneliux/MinecraftSystemdUnit) :D Or read how to install lemp stack, databases, etc. (*.md files in this repository) 
